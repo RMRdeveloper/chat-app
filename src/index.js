@@ -20,4 +20,8 @@ app.get('/', (req, res, next) => {
 	res.send(path.join(__dirname, 'index.html'));
 });
 
+app.use((err, req, res, next) => {
+	if (err) return next(err);
+});
+
 server.listen(EXECUTE_PORT, () => console.log(`Feliz Chat! server on port ${EXECUTE_PORT}`));
