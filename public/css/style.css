@@ -97,3 +97,16 @@ form input {
 form button {
 	padding: 10px 20px;
 }
+
+/*-----------------------Responsive--------------------*/
+
+@media screen and (max-width: 900px) {
+	section {
+		margin: 0 auto;
+		width: 90%;
+	}
+
+	form input {
+		width: auto;
+	}
+}
