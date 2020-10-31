@@ -60,6 +60,15 @@ d.addEventListener('DOMContentLoaded', (e) => {
 			$form.message.value = '';
 			verificarScroll();
 		}
+
+		if (
+			e.target.matches('.btn-change-username') ||
+			e.target.matches('.btn-change-username *')
+		) {
+			w.localStorage.removeItem('user');
+			const setNewUser = prompt('Ingresa el nuevo nombre de usuario: ', 'anónimo');
+			w.localStorage.setItem('user', setNewUser);
+		}
 	});
 
 	socket.on('user connected', (result) => {
