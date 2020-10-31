@@ -5,6 +5,11 @@ d.addEventListener('DOMContentLoaded', (e) => {
 	// socket enlazado
 	const socket = io();
 
+	if (w.localStorage.getItem('user') === null) {
+		const setUser = prompt('Ingrese un nombre de usuario: ', 'anónimo');
+		w.localStorage.setItem('user', setUser);
+	}
+
 	const $container_messages = d.querySelector('.container-messages');
 	const $form = d.querySelector('.container-submit-message');
 	const $container_users_connected = d.querySelector('.container-users-connected');
@@ -31,11 +36,16 @@ d.addEventListener('DOMContentLoaded', (e) => {
 		}
 	};
 
-	const incrustarMensaje = (msg) => {
+	const incrustarMensaje = (msg, usuarioEnviado) => {
+		const contenedorElemento = d.createElement('div');
+		const contenedorUsuario = d.createElement('b');
+		contenedorUsuario.append(usuarioEnviado + ': ' || w.localStorage.getItem('user') + ': ');
 		const nuevoElemento = d.createElement('li');
+		nuevoElemento.append(contenedorUsuario);
 		const contenidoElemento = d.createTextNode(msg);
 		nuevoElemento.append(contenidoElemento);
-		$container_messages.appendChild(nuevoElemento);
+		contenedorElemento.append(nuevoElemento);
+		$container_messages.appendChild(contenedorElemento);
 	};
 
 	verificarScroll();
@@ -45,8 +55,8 @@ d.addEventListener('DOMContentLoaded', (e) => {
 			const msg = $form.message.value;
 			e.preventDefault();
 			if (msg === '') return;
-			socket.emit('submit message', msg);
-			incrustarMensaje(msg);
+			socket.emit('submit message', msg, w.localStorage.getItem('user'));
+			incrustarMensaje(msg, w.localStorage.getItem('user'));
 			$form.message.value = '';
 			verificarScroll();
 		}
@@ -60,8 +70,8 @@ d.addEventListener('DOMContentLoaded', (e) => {
 		$container_users_connected.innerText = `${usersCount} usuarios conectados`;
 	});
 
-	socket.on('Add_New_Message', (msg) => {
-		incrustarMensaje(msg);
+	socket.on('Add_New_Message', (msg, usuarioEnviado) => {
+		incrustarMensaje(msg, usuarioEnviado);
 		verificarScroll();
 	});
 });

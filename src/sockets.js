@@ -6,8 +6,8 @@ module.exports = (io) => {
 		io.emit('User_Activity', usersConnected);
 		socket.broadcast.emit('user connected', true);
 		console.log('NEW USER CONNECTED');
-		socket.on('submit message', (msg) => {
-			socket.broadcast.emit('Add_New_Message', msg);
+		socket.on('submit message', (msg, usuarioEnviado) => {
+			socket.broadcast.emit('Add_New_Message', msg, usuarioEnviado);
 		});
 		socket.on('disconnect', () => {
 			usersConnected--;
