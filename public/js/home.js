@@ -52,6 +52,7 @@ d.addEventListener('DOMContentLoaded', (e) => {
 		if (Notification.permission === 'granted') {
 			let createNotification = new Notification('RMR SimpleChat', {
 				body: usuarioEnviado + ' dice: ' + msg,
+				icon: '../img/logo.png',
 			});
 		}
 	};
