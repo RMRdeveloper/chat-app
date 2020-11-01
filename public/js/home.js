@@ -38,12 +38,22 @@ d.addEventListener('DOMContentLoaded', (e) => {
 	};
 
 	const submitNotification = (msg, usuarioEnviado) => {
+		if (Notification.permission === 'default' || Notification.permission === 'granted')
+			Notification.requestPermission()
+				.then((res) => {
+					console.log('Permiso concedido');
+				})
+				.catch((err) => {
+					console.log(err);
+				});
 		if (msg.length > 100) {
 			msg = msg.substring(0, 100) + '...';
 		}
-		let createNotification = new Notification('RMR SimpleChat', {
-			body: usuarioEnviado + ' dice: ' + msg,
-		});
+		if (Notification.permission === 'granted') {
+			let createNotification = new Notification('RMR SimpleChat', {
+				body: usuarioEnviado + ' dice: ' + msg,
+			});
+		}
 	};
 
 	const incrustarMensaje = (msg, usuarioEnviado) => {
