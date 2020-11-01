@@ -71,6 +71,10 @@ d.addEventListener('DOMContentLoaded', (e) => {
 		}
 	});
 
+	socket.on('Play_Notification', () => {
+		const $audio = d.querySelector('.hidden-audio').play();
+	});
+
 	socket.on('user connected', (result) => {
 		msgConnection(result);
 	});
