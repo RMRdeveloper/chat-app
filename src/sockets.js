@@ -8,7 +8,7 @@ module.exports = (io) => {
 		console.log('NEW USER CONNECTED');
 		socket.on('submit message', (msg, usuarioEnviado) => {
 			socket.broadcast.emit('Add_New_Message', msg, usuarioEnviado);
-			socket.broadcast.emit('Play_Notification');
+			socket.broadcast.emit('Play_Notification', msg, usuarioEnviado);
 		});
 		socket.on('disconnect', () => {
 			usersConnected--;

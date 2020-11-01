@@ -19,6 +19,7 @@ d.addEventListener('DOMContentLoaded', (e) => {
 	const verificarScroll = () => {
 		$container_messages.scrollTop = $container_messages.scrollHeight;
 	};
+	verificarScroll();
 
 	const msgConnection = (result) => {
 		if (result === true) {
@@ -36,6 +37,15 @@ d.addEventListener('DOMContentLoaded', (e) => {
 		}
 	};
 
+	const submitNotification = (msg, usuarioEnviado) => {
+		if (msg.length > 100) {
+			msg = msg.substring(0, 100) + '...';
+		}
+		let createNotification = new Notification('RMR SimpleChat', {
+			body: usuarioEnviado + ' dice: ' + msg,
+		});
+	};
+
 	const incrustarMensaje = (msg, usuarioEnviado) => {
 		const contenedorElemento = d.createElement('div');
 		const contenedorUsuario = d.createElement('b');
@@ -47,8 +57,6 @@ d.addEventListener('DOMContentLoaded', (e) => {
 		contenedorElemento.append(nuevoElemento);
 		$container_messages.appendChild(contenedorElemento);
 	};
-
-	verificarScroll();
 
 	d.addEventListener('click', (e) => {
 		if (e.target.matches('.btn-submit-message') || e.target.matches('.btn-submit-message *')) {
@@ -71,8 +79,11 @@ d.addEventListener('DOMContentLoaded', (e) => {
 		}
 	});
 
-	socket.on('Play_Notification', () => {
-		const $audio = d.querySelector('.hidden-audio').play();
+	socket.on('Play_Notification', (msg, usuarioEnviado) => {
+		if (d.visibilityState === 'hidden') {
+			submitNotification(msg, usuarioEnviado);
+			const $audio = d.querySelector('.hidden-audio').play();
+		}
 	});
 
 	socket.on('user connected', (result) => {
