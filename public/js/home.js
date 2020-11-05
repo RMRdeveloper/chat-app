@@ -62,6 +62,8 @@ d.addEventListener('DOMContentLoaded', (e) => {
 		const contenedorUsuario = d.createElement('b');
 		contenedorUsuario.append(usuarioEnviado + ': ' || w.localStorage.getItem('user') + ': ');
 		const nuevoElemento = d.createElement('li');
+		if (usuarioEnviado !== w.localStorage.getItem('user'))
+			nuevoElemento.classList.add('msg-received');
 		nuevoElemento.append(contenedorUsuario);
 		const contenidoElemento = d.createTextNode(msg);
 		nuevoElemento.append(contenidoElemento);

@@ -76,6 +76,11 @@ ul div li {
 	background: deepskyblue;
 }
 
+ul div li.msg-received {
+	background: rgb(212, 212, 212);
+	color: #444;
+}
+
 section {
 	position: relative;
 	width: 600px;
@@ -123,7 +128,6 @@ form button {
 .hidden-audio {
 	display: none;
 }
-
 /*-----------------------Responsive--------------------*/
 
 @media screen and (max-width: 900px) {
